@@ -402,7 +402,7 @@
              data-lat="${c.lat}" data-lng="${c.lng}">
           <div class="name" title="${escHtml(c.name)}">${escHtml(c.name)}</div>
           <div class="meta">
-            <span class="dist-badge">📍 ${c.dist} km</span>
+            ${currentCategory==='home' ? `<span class="dist-badge">📍 ${c.dist} km</span>` : ''}
             <span class="type-badge ${c.roadType==='ex'?'type-ex':'type-its'}">${c.roadType==='ex'?'고속도로':'국도'}</span>
           </div>
         </div>
