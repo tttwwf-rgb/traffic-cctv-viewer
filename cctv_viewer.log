@@ -305,3 +305,8 @@
 [2026-06-08 10:07:42] INFO cctv_api - type=ex -> 12건
 [2026-06-08 10:07:42] INFO __main__ - CCTV 목록 반환: 12건
 [2026-06-08 10:07:42] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:42] "GET /api/cctv-list HTTP/1.1" 200 -
+[2026-06-08 10:35:23] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:35:23] "GET / HTTP/1.1" 200 -
+[2026-06-08 10:35:25] INFO cctv_api - type=its -> 2건
+[2026-06-08 10:35:26] INFO cctv_api - type=ex -> 12건
+[2026-06-08 10:35:26] INFO __main__ - CCTV 목록 반환: 12건
+[2026-06-08 10:35:26] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:35:26] "GET /api/cctv-list HTTP/1.1" 200 -
