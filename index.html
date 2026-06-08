@@ -236,7 +236,9 @@
           });
           const res  = await fetch(`${API_URL}?${params}`);
           const json = await res.json();
-          const items = json?.response?.data || [];
+          // API가 1건일 때 배열 대신 단일 객체로 반환하는 경우 처리
+          const raw = json?.response?.data;
+          const items = Array.isArray(raw) ? raw : (raw ? [raw] : []);
           for (const c of items) {
             if (seen.has(c.cctvname)) continue;
             seen.add(c.cctvname);
