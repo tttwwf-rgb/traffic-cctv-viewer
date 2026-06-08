@@ -200,15 +200,42 @@
 
   // ── CCTV 선택 ────────────────────────────────────────────────────────────
   let hls = null;
-  function selectCctv(i) {
+  async function selectCctv(i) {
     document.querySelectorAll('.cctv-item').forEach(el => el.classList.remove('active'));
     const el = document.querySelector(`.cctv-item[data-i="${i}"]`);
     if (!el) return;
     el.classList.add('active');
     document.getElementById('info-name').textContent = el.dataset.name;
     document.getElementById('info-dist').textContent = el.dataset.dist + ' km';
-    document.getElementById('stream-url-display').textContent = el.dataset.url;
-    playStream(el.dataset.url, el.dataset.fmt);
+
+    // 클릭할 때마다 최신 URL 재조회 (토큰 만료 방지)
+    document.getElementById('placeholder').style.display = 'none';
+    document.getElementById('video-player').style.display = 'block';
+    document.getElementById('loading-overlay').classList.remove('hidden');
+    document.getElementById('error-overlay').classList.add('hidden');
+
+    try {
+      const margin = RADIUS_KM / 111.0;
+      const params = new URLSearchParams({
+        apiKey: API_KEY, cctvType: '1', getType: 'json',
+        minX: CENTER_LNG - margin, maxX: CENTER_LNG + margin,
+        minY: CENTER_LAT - margin, maxY: CENTER_LAT + margin,
+      });
+      const name = el.dataset.name;
+      let freshUrl = el.dataset.url;
+      for (const type of ['its', 'ex']) {
+        params.set('type', type);
+        const res = await fetch(`${API_URL}?${params}`);
+        const json = await res.json();
+        const items = json?.response?.data || [];
+        const match = items.find(c => c.cctvname === name);
+        if (match?.cctvurl) { freshUrl = match.cctvurl; break; }
+      }
+      document.getElementById('stream-url-display').textContent = freshUrl;
+      playStream(freshUrl, el.dataset.fmt);
+    } catch(e) {
+      playStream(el.dataset.url, el.dataset.fmt); // 실패시 기존 URL 사용
+    }
   }
 
   function playStream(url, fmt) {
