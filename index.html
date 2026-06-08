@@ -11,44 +11,56 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f1117; color: #e2e8f0; min-height: 100vh; }
 
-    header { background: #1a1d27; border-bottom: 1px solid #2d3148; padding: 14px 24px; display: flex; align-items: center; gap: 12px; }
-    header h1 { font-size: 1.1rem; font-weight: 600; }
-    header .badge { font-size: 0.72rem; background: #3b4eca; padding: 2px 8px; border-radius: 999px; }
+    header { background: #1a1d27; border-bottom: 1px solid #2d3148; padding: 12px 20px; display: flex; align-items: center; gap: 10px; }
+    header h1 { font-size: 1.05rem; font-weight: 600; }
+    header .badge { font-size: 0.7rem; background: #3b4eca; padding: 2px 8px; border-radius: 999px; }
     .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #6b7280; margin-left: auto; }
     .status-dot.live { background: #22c55e; animation: pulse 1.5s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-    .container { display: flex; height: calc(100vh - 53px); }
+    .container { display: flex; height: calc(100vh - 49px); }
 
+    /* ── 사이드바 ── */
     .sidebar { width: 280px; min-width: 220px; background: #1a1d27; border-right: 1px solid #2d3148; display: flex; flex-direction: column; overflow: hidden; }
-    .sidebar-header { padding: 14px 16px 10px; font-size: 0.78rem; color: #94a3b8; border-bottom: 1px solid #2d3148; display: flex; justify-content: space-between; align-items: center; }
-    #refresh-btn { background: #2d3148; border: none; color: #94a3b8; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; transition: background 0.2s; }
+    .sidebar-header { padding: 10px 14px 8px; border-bottom: 1px solid #2d3148; }
+    .sidebar-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.78rem; color: #94a3b8; }
+    #refresh-btn { background: #2d3148; border: none; color: #94a3b8; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.73rem; transition: background 0.2s; }
     #refresh-btn:hover { background: #3b4eca; color: #fff; }
     #refresh-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
+    /* 필터 버튼 */
+    .filter-bar { display: flex; gap: 6px; }
+    .filter-btn { flex: 1; padding: 5px 4px; border: 1px solid #2d3148; border-radius: 6px; background: transparent; color: #64748b; font-size: 0.72rem; cursor: pointer; transition: all 0.15s; text-align: center; }
+    .filter-btn:hover { border-color: #3b4eca; color: #a5b4fc; }
+    .filter-btn.active { background: #1e2f5e; border-color: #3b4eca; color: #a5b4fc; font-weight: 600; }
+
     .cctv-list { overflow-y: auto; flex: 1; }
-    .cctv-item { padding: 12px 16px; border-bottom: 1px solid #1e2133; cursor: pointer; transition: background 0.15s; }
+    .cctv-item { padding: 11px 14px; border-bottom: 1px solid #1e2133; cursor: pointer; transition: background 0.15s; }
     .cctv-item:hover { background: #21263a; }
     .cctv-item.active { background: #1e2f5e; border-left: 3px solid #3b4eca; }
-    .cctv-item .name { font-size: 0.85rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .cctv-item .meta { font-size: 0.72rem; color: #64748b; margin-top: 3px; }
-    .dist-badge { display: inline-block; background: #1e293b; border: 1px solid #334155; border-radius: 4px; padding: 1px 6px; font-size: 0.68rem; color: #94a3b8; }
+    .cctv-item.hidden { display: none; }
+    .cctv-item .name { font-size: 0.84rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cctv-item .meta { font-size: 0.71rem; color: #64748b; margin-top: 3px; display: flex; gap: 6px; align-items: center; }
+    .dist-badge { display: inline-block; background: #1e293b; border: 1px solid #334155; border-radius: 4px; padding: 1px 6px; font-size: 0.67rem; color: #94a3b8; }
+    .type-badge { display: inline-block; border-radius: 4px; padding: 1px 6px; font-size: 0.67rem; }
+    .type-ex { background: #1a2e1a; border: 1px solid #166534; color: #4ade80; }
+    .type-its { background: #1e2a3a; border: 1px solid #1d4ed8; color: #60a5fa; }
 
+    /* ── 메인 ── */
     .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
     .player-wrap { flex: 1; background: #000; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; min-height: 0; }
-
-    /* 지도 */
-    #map-wrap { height: 240px; min-height: 200px; border-top: 1px solid #2d3148; position: relative; }
-    #map { width: 100%; height: 100%; }
-    .map-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #374151; font-size: 0.82rem; background: #0d1020; }
-
     #video-player { width: 100%; height: 100%; object-fit: contain; display: none; }
     .placeholder { text-align: center; color: #374151; }
     .placeholder .icon { font-size: 3.5rem; margin-bottom: 12px; }
 
-    .info-bar { background: #1a1d27; border-top: 1px solid #2d3148; padding: 10px 20px; display: flex; gap: 24px; align-items: center; font-size: 0.78rem; color: #64748b; }
+    /* 지도 */
+    #map-wrap { height: 230px; border-top: 1px solid #2d3148; position: relative; flex-shrink: 0; }
+    #map { width: 100%; height: 100%; }
+    .map-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #374151; font-size: 0.82rem; background: #0d1020; pointer-events: none; }
+
+    .info-bar { background: #1a1d27; border-top: 1px solid #2d3148; padding: 8px 18px; display: flex; gap: 20px; align-items: center; font-size: 0.76rem; color: #64748b; flex-shrink: 0; }
     .info-bar span { color: #94a3b8; }
-    #stream-url-display { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; font-size: 0.72rem; color: #475569; }
+    #stream-url-display { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; font-size: 0.7rem; color: #475569; }
 
     .overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: rgba(0,0,0,0.75); font-size: 0.9rem; }
     .overlay.hidden { display: none; }
@@ -61,24 +73,24 @@
     .cctv-list::-webkit-scrollbar-thumb { background: #2d3148; border-radius: 4px; }
 
     @media (max-width: 600px) {
-      header { padding: 10px 14px; }
-      header h1 { font-size: 0.95rem; }
-      .container { flex-direction: column; height: auto; min-height: calc(100vh - 45px); }
-      .sidebar { width: 100%; min-width: unset; border-right: none; border-top: 1px solid #2d3148; max-height: 40vh; order: 2; }
+      header { padding: 9px 13px; }
+      header h1 { font-size: 0.92rem; }
+      .container { flex-direction: column; height: auto; min-height: calc(100vh - 44px); }
+      .sidebar { width: 100%; min-width: unset; border-right: none; border-top: 1px solid #2d3148; max-height: 42vh; order: 2; }
       .main { order: 1; flex: none; }
-      .player-wrap { height: 45vw; min-height: 160px; }
-      #map-wrap { height: 200px; }
-      .info-bar { padding: 6px 12px; gap: 10px; flex-wrap: wrap; }
+      .player-wrap { height: 44vw; min-height: 160px; }
+      #map-wrap { height: 180px; }
+      .info-bar { padding: 5px 11px; gap: 8px; flex-wrap: wrap; }
       #stream-url-display { display: none; }
-      .cctv-item { padding: 14px 16px; }
-      .cctv-item .name { font-size: 0.9rem; white-space: normal; }
+      .cctv-item { padding: 13px 14px; }
+      .cctv-item .name { font-size: 0.88rem; white-space: normal; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <span style="font-size:1.3rem">📹</span>
+  <span style="font-size:1.2rem">📹</span>
   <h1>교통 CCTV 뷰어</h1>
   <span class="badge">대구 달서구</span>
   <div class="status-dot" id="status-dot"></div>
@@ -87,8 +99,15 @@
 <div class="container">
   <aside class="sidebar">
     <div class="sidebar-header">
-      <span id="list-count">불러오는 중…</span>
-      <button id="refresh-btn" onclick="loadList()" disabled>↺ 새로고침</button>
+      <div class="sidebar-top">
+        <span id="list-count">불러오는 중…</span>
+        <button id="refresh-btn" onclick="loadList()" disabled>↺ 새로고침</button>
+      </div>
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all"  onclick="setFilter('all')">전체</button>
+        <button class="filter-btn"        data-filter="ex"   onclick="setFilter('ex')">🛣 고속도로</button>
+        <button class="filter-btn"        data-filter="its"  onclick="setFilter('its')">🚗 국도</button>
+      </div>
     </div>
     <div class="cctv-list" id="cctv-list"></div>
   </aside>
@@ -110,6 +129,7 @@
         <button onclick="hideError()" style="margin-top:8px;padding:6px 16px;background:#2d3148;border:none;color:#e2e8f0;border-radius:6px;cursor:pointer">닫기</button>
       </div>
     </div>
+
     <div id="map-wrap">
       <div id="map"></div>
       <div class="map-placeholder" id="map-placeholder">📍 카메라 선택 시 위치가 표시됩니다</div>
@@ -125,103 +145,107 @@
 
 <script>
   // ── 지도 ─────────────────────────────────────────────────────────────────
-  let map = null, activeMarker = null, allMarkers = [];
+  let map = null, allMarkers = [];
 
   function initMap(lat, lng, name) {
     document.getElementById('map-placeholder').style.display = 'none';
-
     if (!map) {
-      map = L.map('map', { zoomControl: true }).setView([lat, lng], 15);
+      map = L.map('map', { zoomControl: true }).setView([lat, lng], 14);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap',
-        maxZoom: 19,
+        attribution: '© OpenStreetMap', maxZoom: 19,
       }).addTo(map);
     } else {
-      map.setView([lat, lng], 15);
+      map.setView([lat, lng], 14);
     }
-
-    // 기존 마커 제거
     allMarkers.forEach(m => map.removeLayer(m));
     allMarkers = [];
-
-    // 선택된 카메라 마커 (빨간색)
-    const icon = L.divIcon({
-      className: '',
-      html: `<div style="background:#ef4444;border:3px solid #fff;border-radius:50%;width:18px;height:18px;box-shadow:0 2px 6px rgba(0,0,0,0.5)"></div>`,
-      iconSize: [18, 18],
-      iconAnchor: [9, 9],
-    });
-    activeMarker = L.marker([lat, lng], { icon })
-      .addTo(map)
-      .bindPopup(`<b>📹 ${name}</b>`, { closeButton: false })
-      .openPopup();
-    allMarkers.push(activeMarker);
   }
 
-  function updateMapOtherMarkers(cctvList, selectedName) {
+  function updateMapMarkers(list, selectedName) {
     if (!map) return;
-    // 다른 카메라 회색 마커
-    cctvList.forEach(c => {
-      if (c.name === selectedName) return;
+    list.forEach(c => {
+      const isSelected = c.name === selectedName;
       const icon = L.divIcon({
         className: '',
-        html: `<div style="background:#64748b;border:2px solid #fff;border-radius:50%;width:12px;height:12px;box-shadow:0 1px 4px rgba(0,0,0,0.4)" title="${c.name}"></div>`,
-        iconSize: [12, 12],
-        iconAnchor: [6, 6],
+        html: isSelected
+          ? `<div style="background:#ef4444;border:3px solid #fff;border-radius:50%;width:18px;height:18px;box-shadow:0 2px 8px rgba(0,0,0,0.6)"></div>`
+          : `<div style="background:${c.roadType==='ex'?'#4ade80':'#60a5fa'};border:2px solid #fff;border-radius:50%;width:11px;height:11px;box-shadow:0 1px 4px rgba(0,0,0,0.4)"></div>`,
+        iconSize: isSelected ? [18,18] : [11,11],
+        iconAnchor: isSelected ? [9,9] : [5,5],
       });
       const m = L.marker([c.lat, c.lng], { icon })
         .addTo(map)
-        .bindPopup(`<span style="font-size:0.85rem">📹 ${c.name}<br>📍 ${c.dist}km</span>`);
+        .bindPopup(`<b style="font-size:0.85rem">📹 ${c.name}</b><br><span style="font-size:0.78rem;color:#666">📏 ${c.dist}km | ${c.roadType==='ex'?'고속도로':'국도'}</span>`);
+      if (isSelected) m.openPopup();
       allMarkers.push(m);
     });
   }
 
   // ── 설정 ─────────────────────────────────────────────────────────────────
-  const API_KEY    = '0bee526622c242fe973c7b292ecb1235';
-  const API_URL    = 'https://openapi.its.go.kr:9443/cctvInfo';
-  const CENTER_LAT = 35.8176;   // 대구 달서구 월배쌍용예가아파트
-  const CENTER_LNG = 128.5160;
-  const RADIUS_KM  = 6.0;
-  const MAX_COUNT  = 12;
+  const API_KEY  = '0bee526622c242fe973c7b292ecb1235';
+  const API_URL  = 'https://openapi.its.go.kr:9443/cctvInfo';
+  const MAX_COUNT = 30;
 
-  // ── 유틸 ─────────────────────────────────────────────────────────────────
+  // 검색 중심점 (두 지점)
+  const CENTERS = [
+    { lat: 35.8176, lng: 128.5160, label: '월배쌍용예가' },
+    { lat: 35.8134, lng: 128.5113, label: '달서대로67'   },
+  ];
+
+  // 도로 유형별 검색 반경
+  const RADIUS = { its: 10.0, ex: 8.0 };
+
   function haversine(lat1, lng1, lat2, lng2) {
-    const R = 6371, d2r = Math.PI/180;
-    const dlat = (lat2-lat1)*d2r, dlng = (lng2-lng1)*d2r;
-    const a = Math.sin(dlat/2)**2 + Math.cos(lat1*d2r)*Math.cos(lat2*d2r)*Math.sin(dlng/2)**2;
-    return R * 2 * Math.asin(Math.sqrt(a));
+    const R=6371, d2r=Math.PI/180;
+    const dlat=(lat2-lat1)*d2r, dlng=(lng2-lng1)*d2r;
+    const a=Math.sin(dlat/2)**2+Math.cos(lat1*d2r)*Math.cos(lat2*d2r)*Math.sin(dlng/2)**2;
+    return R*2*Math.asin(Math.sqrt(a));
   }
   function escHtml(s) {
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
+  // 가장 가까운 중심점까지의 거리
+  function minDist(lat, lng) {
+    return Math.min(...CENTERS.map(c => haversine(c.lat, c.lng, lat, lng)));
+  }
+
   // ── CCTV 목록 로드 ───────────────────────────────────────────────────────
+  let currentFilter = 'all';
+
   async function loadList() {
     const btn = document.getElementById('refresh-btn');
     const countEl = document.getElementById('list-count');
-    const listEl = document.getElementById('cctv-list');
-    const dot = document.getElementById('status-dot');
+    const listEl  = document.getElementById('cctv-list');
+    const dot     = document.getElementById('status-dot');
 
     btn.disabled = true;
     countEl.textContent = '불러오는 중…';
     listEl.innerHTML = '<div style="padding:20px;color:#475569;text-align:center;font-size:0.82rem">로딩 중…</div>';
     dot.className = 'status-dot';
 
-    const margin = RADIUS_KM / 111.0;
-    const params = new URLSearchParams({
-      apiKey: API_KEY, cctvType: '1', getType: 'json',
-      minX: CENTER_LNG - margin, maxX: CENTER_LNG + margin,
-      minY: CENTER_LAT - margin, maxY: CENTER_LAT + margin,
-    });
-
+    const seen = new Set();
     let allItems = [];
+
     try {
-      for (const type of ['its', 'ex']) {
-        params.set('type', type);
-        const res = await fetch(`${API_URL}?${params}`);
-        const json = await res.json();
-        const items = json?.response?.data || [];
-        allItems = allItems.concat(items);
+      for (const center of CENTERS) {
+        for (const roadType of ['its', 'ex']) {
+          const radius = RADIUS[roadType];
+          const margin = radius / 111.0;
+          const params = new URLSearchParams({
+            apiKey: API_KEY, type: roadType, cctvType: '1', getType: 'json',
+            minX: center.lng - margin, maxX: center.lng + margin,
+            minY: center.lat - margin, maxY: center.lat + margin,
+          });
+          const res  = await fetch(`${API_URL}?${params}`);
+          const json = await res.json();
+          const items = json?.response?.data || [];
+          for (const c of items) {
+            if (!c.cctvurl || seen.has(c.cctvname)) continue;
+            seen.add(c.cctvname);
+            allItems.push({ ...c, roadType });
+          }
+        }
       }
     } catch(e) {
       countEl.textContent = '오류';
@@ -230,41 +254,64 @@
       return;
     }
 
-    // 거리 계산 + 정렬
-    const list = allItems
-      .filter(c => c.cctvurl)
+    // 가장 가까운 중심점 기준 거리 계산 + 정렬
+    cctvData = allItems
       .map(c => ({
-        name: c.cctvname || '이름 없음',
-        lat:  parseFloat(c.coordy),
-        lng:  parseFloat(c.coordx),
-        url:  c.cctvurl,
-        fmt:  (c.cctvformat || '').toUpperCase(),
-        dist: Math.round(haversine(CENTER_LAT, CENTER_LNG, parseFloat(c.coordy), parseFloat(c.coordx)) * 100) / 100,
+        name:     c.cctvname || '이름 없음',
+        lat:      parseFloat(c.coordy),
+        lng:      parseFloat(c.coordx),
+        url:      c.cctvurl,
+        fmt:      (c.cctvformat || '').toUpperCase(),
+        roadType: c.roadType,
+        dist:     Math.round(minDist(parseFloat(c.coordy), parseFloat(c.coordx)) * 100) / 100,
       }))
       .sort((a,b) => a.dist - b.dist)
       .slice(0, MAX_COUNT);
 
-    countEl.textContent = `${list.length}개 카메라`;
-    dot.className = list.length > 0 ? 'status-dot live' : 'status-dot';
+    const total = cctvData.length;
+    countEl.textContent = `${total}개 카메라`;
+    dot.className = total > 0 ? 'status-dot live' : 'status-dot';
 
-    if (list.length === 0) {
-      listEl.innerHTML = `<div style="padding:16px;color:#f87171;font-size:0.78rem">
-        반경 내 CCTV 없음<br><br>
-        <span style="color:#64748b">원본 데이터: ${allItems.length}건 수신</span>
-      </div>`;
+    if (total === 0) {
+      listEl.innerHTML = '<div style="padding:20px;color:#475569;text-align:center;font-size:0.82rem">반경 내 CCTV 없음</div>';
     } else {
-      cctvData = list;
-      listEl.innerHTML = list.map((c,i) => `
-        <div class="cctv-item" data-i="${i}" onclick="selectCctv(${i})"
+      listEl.innerHTML = cctvData.map((c,i) => `
+        <div class="cctv-item" data-i="${i}" data-type="${c.roadType}" onclick="selectCctv(${i})"
              data-url="${escHtml(c.url)}" data-name="${escHtml(c.name)}"
              data-dist="${c.dist}" data-fmt="${c.fmt}"
              data-lat="${c.lat}" data-lng="${c.lng}">
           <div class="name" title="${escHtml(c.name)}">${escHtml(c.name)}</div>
-          <div class="meta"><span class="dist-badge">📍 ${c.dist} km</span></div>
+          <div class="meta">
+            <span class="dist-badge">📍 ${c.dist} km</span>
+            <span class="type-badge ${c.roadType==='ex'?'type-ex':'type-its'}">${c.roadType==='ex'?'고속도로':'국도'}</span>
+          </div>
         </div>
       `).join('');
     }
+
+    applyFilter(currentFilter);
     btn.disabled = false;
+  }
+
+  // ── 필터 ─────────────────────────────────────────────────────────────────
+  function setFilter(f) {
+    currentFilter = f;
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.filter === f);
+    });
+    applyFilter(f);
+  }
+
+  function applyFilter(f) {
+    let visible = 0;
+    document.querySelectorAll('.cctv-item').forEach(el => {
+      const show = f === 'all' || el.dataset.type === f;
+      el.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    const total = cctvData.length;
+    document.getElementById('list-count').textContent =
+      f === 'all' ? `${total}개 카메라` : `${visible}개 카메라 (${f==='ex'?'고속도로':'국도'})`;
   }
 
   // ── CCTV 선택 ────────────────────────────────────────────────────────────
@@ -283,49 +330,45 @@
     const lat = parseFloat(el.dataset.lat), lng = parseFloat(el.dataset.lng);
     if (lat && lng) {
       initMap(lat, lng, el.dataset.name);
-      updateMapOtherMarkers(cctvData, el.dataset.name);
+      updateMapMarkers(cctvData, el.dataset.name);
     }
 
-    // 클릭할 때마다 최신 URL 재조회 (토큰 만료 방지)
+    // 플레이어 준비
     document.getElementById('placeholder').style.display = 'none';
     document.getElementById('video-player').style.display = 'block';
     document.getElementById('loading-overlay').classList.remove('hidden');
     document.getElementById('error-overlay').classList.add('hidden');
 
+    // 최신 URL 재조회
     try {
-      const margin = RADIUS_KM / 111.0;
-      const params = new URLSearchParams({
-        apiKey: API_KEY, cctvType: '1', getType: 'json',
-        minX: CENTER_LNG - margin, maxX: CENTER_LNG + margin,
-        minY: CENTER_LAT - margin, maxY: CENTER_LAT + margin,
-      });
       const name = el.dataset.name;
+      const roadType = el.dataset.type;
       let freshUrl = el.dataset.url;
-      for (const type of ['its', 'ex']) {
-        params.set('type', type);
-        const res = await fetch(`${API_URL}?${params}`);
-        const json = await res.json();
-        const items = json?.response?.data || [];
-        const match = items.find(c => c.cctvname === name);
-        if (match?.cctvurl) { freshUrl = match.cctvurl; break; }
-      }
+
+      const center = CENTERS[0];
+      const radius = RADIUS[roadType];
+      const margin = radius / 111.0;
+      const params = new URLSearchParams({
+        apiKey: API_KEY, type: roadType, cctvType: '1', getType: 'json',
+        minX: center.lng - margin*2, maxX: center.lng + margin*2,
+        minY: center.lat - margin*2, maxY: center.lat + margin*2,
+      });
+      const res  = await fetch(`${API_URL}?${params}`);
+      const json = await res.json();
+      const items = json?.response?.data || [];
+      const match = items.find(c => c.cctvname === name);
+      if (match?.cctvurl) freshUrl = match.cctvurl;
+
       document.getElementById('stream-url-display').textContent = freshUrl;
       playStream(freshUrl, el.dataset.fmt);
     } catch(e) {
-      playStream(el.dataset.url, el.dataset.fmt); // 실패시 기존 URL 사용
+      playStream(el.dataset.url, el.dataset.fmt);
     }
   }
 
   function playStream(url, fmt) {
-    // HTTPS 페이지에서 HTTP 스트림 차단 방지 — https로 강제 변환
     url = url.replace(/^http:\/\//, 'https://');
-
     const video = document.getElementById('video-player');
-    document.getElementById('placeholder').style.display = 'none';
-    video.style.display = 'block';
-    document.getElementById('loading-overlay').classList.remove('hidden');
-    document.getElementById('error-overlay').classList.add('hidden');
-
     if (hls) { hls.destroy(); hls = null; }
 
     const isHls = fmt === 'HLS' || url.includes('.m3u8');
@@ -350,9 +393,7 @@
     document.getElementById('error-overlay').classList.remove('hidden');
     document.getElementById('error-msg').textContent = msg;
   }
-  function hideError() {
-    document.getElementById('error-overlay').classList.add('hidden');
-  }
+  function hideError() { document.getElementById('error-overlay').classList.add('hidden'); }
 
   loadList();
 </script>
