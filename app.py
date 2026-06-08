@@ -33,21 +33,10 @@ def setup_logging():
     root = logging.getLogger()
     root.setLevel(logging.INFO)
 
-    # 콘솔 (Vercel 포함 모든 환경)
+    # 콘솔 출력 (로컬 + 클라우드 모든 환경)
     ch = logging.StreamHandler(sys.stdout)
     ch.setFormatter(fmt)
     root.addHandler(ch)
-
-    # 파일 로그 (로컬 환경에서만, Vercel은 파일 쓰기 불가)
-    if os.environ.get("VERCEL") is None:
-        try:
-            fh = logging.handlers.RotatingFileHandler(
-                "cctv_viewer.log", maxBytes=1_000_000, backupCount=3, encoding="utf-8"
-            )
-            fh.setFormatter(fmt)
-            root.addHandler(fh)
-        except Exception:
-            pass
 
 
 setup_logging()
