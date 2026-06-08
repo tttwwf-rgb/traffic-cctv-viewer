@@ -124,6 +124,58 @@
 </div>
 
 <script>
+  // ── 지도 ─────────────────────────────────────────────────────────────────
+  let map = null, activeMarker = null, allMarkers = [];
+
+  function initMap(lat, lng, name) {
+    document.getElementById('map-placeholder').style.display = 'none';
+
+    if (!map) {
+      map = L.map('map', { zoomControl: true }).setView([lat, lng], 15);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+        maxZoom: 19,
+      }).addTo(map);
+    } else {
+      map.setView([lat, lng], 15);
+    }
+
+    // 기존 마커 제거
+    allMarkers.forEach(m => map.removeLayer(m));
+    allMarkers = [];
+
+    // 선택된 카메라 마커 (빨간색)
+    const icon = L.divIcon({
+      className: '',
+      html: `<div style="background:#ef4444;border:3px solid #fff;border-radius:50%;width:18px;height:18px;box-shadow:0 2px 6px rgba(0,0,0,0.5)"></div>`,
+      iconSize: [18, 18],
+      iconAnchor: [9, 9],
+    });
+    activeMarker = L.marker([lat, lng], { icon })
+      .addTo(map)
+      .bindPopup(`<b>📹 ${name}</b>`, { closeButton: false })
+      .openPopup();
+    allMarkers.push(activeMarker);
+  }
+
+  function updateMapOtherMarkers(cctvList, selectedName) {
+    if (!map) return;
+    // 다른 카메라 회색 마커
+    cctvList.forEach(c => {
+      if (c.name === selectedName) return;
+      const icon = L.divIcon({
+        className: '',
+        html: `<div style="background:#64748b;border:2px solid #fff;border-radius:50%;width:12px;height:12px;box-shadow:0 1px 4px rgba(0,0,0,0.4)" title="${c.name}"></div>`,
+        iconSize: [12, 12],
+        iconAnchor: [6, 6],
+      });
+      const m = L.marker([c.lat, c.lng], { icon })
+        .addTo(map)
+        .bindPopup(`<span style="font-size:0.85rem">📹 ${c.name}<br>📍 ${c.dist}km</span>`);
+      allMarkers.push(m);
+    });
+  }
+
   // ── 설정 ─────────────────────────────────────────────────────────────────
   const API_KEY    = '0bee526622c242fe973c7b292ecb1235';
   const API_URL    = 'https://openapi.its.go.kr:9443/cctvInfo';
