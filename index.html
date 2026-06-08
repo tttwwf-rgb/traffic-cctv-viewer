@@ -253,9 +253,12 @@
         <span style="color:#64748b">원본 데이터: ${allItems.length}건 수신</span>
       </div>`;
     } else {
+      cctvData = list;
       listEl.innerHTML = list.map((c,i) => `
         <div class="cctv-item" data-i="${i}" onclick="selectCctv(${i})"
-             data-url="${escHtml(c.url)}" data-name="${escHtml(c.name)}" data-dist="${c.dist}" data-fmt="${c.fmt}">
+             data-url="${escHtml(c.url)}" data-name="${escHtml(c.name)}"
+             data-dist="${c.dist}" data-fmt="${c.fmt}"
+             data-lat="${c.lat}" data-lng="${c.lng}">
           <div class="name" title="${escHtml(c.name)}">${escHtml(c.name)}</div>
           <div class="meta"><span class="dist-badge">📍 ${c.dist} km</span></div>
         </div>
@@ -266,6 +269,8 @@
 
   // ── CCTV 선택 ────────────────────────────────────────────────────────────
   let hls = null;
+  let cctvData = [];
+
   async function selectCctv(i) {
     document.querySelectorAll('.cctv-item').forEach(el => el.classList.remove('active'));
     const el = document.querySelector(`.cctv-item[data-i="${i}"]`);
@@ -273,6 +278,13 @@
     el.classList.add('active');
     document.getElementById('info-name').textContent = el.dataset.name;
     document.getElementById('info-dist').textContent = el.dataset.dist + ' km';
+
+    // 지도 업데이트
+    const lat = parseFloat(el.dataset.lat), lng = parseFloat(el.dataset.lng);
+    if (lat && lng) {
+      initMap(lat, lng, el.dataset.name);
+      updateMapOtherMarkers(cctvData, el.dataset.name);
+    }
 
     // 클릭할 때마다 최신 URL 재조회 (토큰 만료 방지)
     document.getElementById('placeholder').style.display = 'none';
