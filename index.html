@@ -423,7 +423,9 @@
     el.classList.add('active');
 
     document.getElementById('info-name').textContent = el.dataset.name;
-    document.getElementById('info-dist').textContent = el.dataset.dist + ' km';
+    const distEl = document.getElementById('info-dist');
+    distEl.textContent = currentCategory === 'home' ? el.dataset.dist + ' km' : '—';
+    distEl.parentElement.style.display = currentCategory === 'home' ? '' : 'none';
 
     // 지도
     const lat = parseFloat(el.dataset.lat), lng = parseFloat(el.dataset.lng);
