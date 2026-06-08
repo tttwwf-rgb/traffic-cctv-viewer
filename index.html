@@ -4,6 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>교통 CCTV 뷰어</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1a1d27">
+
+  <!-- iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CCTV 뷰어">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -480,6 +491,11 @@
 
   // ── 초기 로드 ─────────────────────────────────────────────────────────────
   loadList();
+
+  // ── 서비스워커 등록 ───────────────────────────────────────────────────────
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  }
 </script>
 </body>
 </html>
