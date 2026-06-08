@@ -346,7 +346,7 @@
       const radius = RADIUS[roadType];
       const margin = radius / 111.0;
       const params = new URLSearchParams({
-        apiKey: API_KEY, type: roadType, cctvType: '1', getType: 'json',
+        apiKey: API_KEY, type: roadType, getType: 'json',
         minX: center.lng - margin*2, maxX: center.lng + margin*2,
         minY: center.lat - margin*2, maxY: center.lat + margin*2,
       });
