@@ -217,3 +217,91 @@
 [2026-06-08 10:00:50] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:00:50] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
 [2026-06-08 10:00:51] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:00:51] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
 [2026-06-08 10:00:52] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:00:52] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:00:53] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:00:53] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:00:54] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:00:54] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:00:55] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:00:55] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:00:56] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:00:56] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:00:57] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:00:57] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:00:58] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:00:58] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:00:59] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:00:59] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:00] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:00] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:01] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:01] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:02] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:02] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:03] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:03] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:04] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:04] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:05] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:05] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:06] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:06] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:07] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:07] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:08] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:08] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:09] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:09] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:10] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:10] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:11] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:11] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:12] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:12] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:13] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:13] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:14] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:14] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:15] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:15] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:16] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:16] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:17] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:17] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:18] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:18] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:22] INFO __main__ - CCTV 뷰어 시작 → http://127.0.0.1:5000
+[2026-06-08 10:01:22] INFO __main__ - 종료하려면 Ctrl+C
+[2026-06-08 10:01:22] INFO werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[2026-06-08 10:01:22] INFO werkzeug - [33mPress CTRL+C to quit[0m
+[2026-06-08 10:01:22] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:22] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:23] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:23] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:23] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:23] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:24] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:24] "GET / HTTP/1.1" 200 -
+[2026-06-08 10:01:24] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:24] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:25] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:25] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:26] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:26] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:27] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:27] "GET / HTTP/1.1" 200 -
+[2026-06-08 10:01:27] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:27] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:28] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:28] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:28] INFO cctv_api - type=its -> 2건
+[2026-06-08 10:01:29] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:29] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:30] INFO cctv_api - type=ex -> 12건
+[2026-06-08 10:01:30] INFO __main__ - CCTV 목록 반환: 12건
+[2026-06-08 10:01:30] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:30] "GET /api/cctv-list HTTP/1.1" 200 -
+[2026-06-08 10:01:30] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:30] "HEAD / HTTP/1.1" 200 -
+[2026-06-08 10:01:30] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:30] "GET / HTTP/1.1" 200 -
+[2026-06-08 10:01:30] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:30] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:31] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:31] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:32] INFO cctv_api - type=its -> 2건
+[2026-06-08 10:01:32] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:32] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:33] INFO cctv_api - type=ex -> 12건
+[2026-06-08 10:01:33] INFO __main__ - CCTV 목록 반환: 12건
+[2026-06-08 10:01:33] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:33] "GET /api/cctv-list HTTP/1.1" 200 -
+[2026-06-08 10:01:33] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:33] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:34] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:34] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:35] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:35] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:36] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:36] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:37] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:37] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:01:38] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:01:38] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:02:30] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:02:30] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:03:30] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:03:30] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:04:30] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:04:30] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:05:30] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:05:30] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:06:30] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:06:30] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:07:08] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:08] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:07:09] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:09] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:07:10] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:10] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:07:11] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:11] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:07:12] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:12] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:07:13] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:13] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:07:14] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:14] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:07:15] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:15] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:07:16] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:16] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:07:17] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:17] "[33mGET /api/upload-progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:07:20] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:20] "[33mGET /upload/progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:07:22] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:22] "[33mGET /upload/progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:07:23] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:23] "[33mGET /upload/progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:07:23] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:23] "[33mGET /upload/progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:07:23] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:23] "[33mGET /upload/progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:07:23] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:23] "[33mGET /upload/progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:07:24] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:24] "[33mGET /upload/progress/fc064c9e-a833-410f-9978-ed6b3c1fdc5f HTTP/1.1[0m" 404 -
+[2026-06-08 10:07:39] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:39] "GET / HTTP/1.1" 200 -
+[2026-06-08 10:07:41] INFO cctv_api - type=its -> 2건
+[2026-06-08 10:07:42] INFO cctv_api - type=ex -> 12건
+[2026-06-08 10:07:42] INFO __main__ - CCTV 목록 반환: 12건
+[2026-06-08 10:07:42] INFO werkzeug - 127.0.0.1 - - [08/Jun/2026 10:07:42] "GET /api/cctv-list HTTP/1.1" 200 -
