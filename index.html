@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>교통 CCTV 뷰어 — 대구 달서구</title>
+  <title>교통 CCTV 뷰어</title>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -13,37 +13,55 @@
 
     header { background: #1a1d27; border-bottom: 1px solid #2d3148; padding: 12px 20px; display: flex; align-items: center; gap: 10px; }
     header h1 { font-size: 1.05rem; font-weight: 600; }
-    header .badge { font-size: 0.7rem; background: #3b4eca; padding: 2px 8px; border-radius: 999px; }
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #6b7280; margin-left: auto; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #6b7280; margin-left: auto; flex-shrink: 0; }
     .status-dot.live { background: #22c55e; animation: pulse 1.5s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
     .container { display: flex; height: calc(100vh - 49px); }
 
     /* ── 사이드바 ── */
-    .sidebar { width: 280px; min-width: 220px; background: #1a1d27; border-right: 1px solid #2d3148; display: flex; flex-direction: column; overflow: hidden; }
-    .sidebar-header { padding: 10px 14px 8px; border-bottom: 1px solid #2d3148; }
-    .sidebar-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.78rem; color: #94a3b8; }
-    #refresh-btn { background: #2d3148; border: none; color: #94a3b8; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.73rem; transition: background 0.2s; }
-    #refresh-btn:hover { background: #3b4eca; color: #fff; }
-    #refresh-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .sidebar { width: 290px; min-width: 230px; background: #1a1d27; border-right: 1px solid #2d3148; display: flex; flex-direction: column; overflow: hidden; }
 
-    /* 필터 버튼 */
-    .filter-bar { display: flex; gap: 6px; }
-    .filter-btn { flex: 1; padding: 5px 4px; border: 1px solid #2d3148; border-radius: 6px; background: transparent; color: #64748b; font-size: 0.72rem; cursor: pointer; transition: all 0.15s; text-align: center; }
+    .sidebar-ctrl { padding: 10px 12px; border-bottom: 1px solid #2d3148; display: flex; flex-direction: column; gap: 8px; }
+
+    /* 카테고리 탭 */
+    .cat-tabs { display: flex; gap: 4px; }
+    .cat-tab { flex: 1; padding: 6px 4px; border: 1px solid #2d3148; border-radius: 7px; background: transparent; color: #64748b; font-size: 0.73rem; cursor: pointer; transition: all 0.15s; text-align: center; }
+    .cat-tab:hover { border-color: #3b4eca; color: #a5b4fc; }
+    .cat-tab.active { background: #1e2f5e; border-color: #3b4eca; color: #a5b4fc; font-weight: 600; }
+
+    /* 구군 선택 */
+    .district-grid { display: none; flex-wrap: wrap; gap: 4px; }
+    .district-grid.show { display: flex; }
+    .dist-btn { padding: 4px 8px; border: 1px solid #2d3148; border-radius: 5px; background: transparent; color: #64748b; font-size: 0.7rem; cursor: pointer; transition: all 0.15s; }
+    .dist-btn:hover { border-color: #7c3aed; color: #c4b5fd; }
+    .dist-btn.active { background: #2d1b69; border-color: #7c3aed; color: #c4b5fd; font-weight: 600; }
+
+    /* 도로 필터 */
+    .filter-row { display: flex; gap: 4px; align-items: center; }
+    .list-count { font-size: 0.75rem; color: #94a3b8; flex: 1; }
+    .filter-bar { display: flex; gap: 4px; }
+    .filter-btn { padding: 4px 8px; border: 1px solid #2d3148; border-radius: 5px; background: transparent; color: #64748b; font-size: 0.7rem; cursor: pointer; transition: all 0.15s; }
     .filter-btn:hover { border-color: #3b4eca; color: #a5b4fc; }
     .filter-btn.active { background: #1e2f5e; border-color: #3b4eca; color: #a5b4fc; font-weight: 600; }
 
+    /* 새로고침 */
+    .refresh-row { display: flex; justify-content: flex-end; }
+    #refresh-btn { background: #2d3148; border: none; color: #94a3b8; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.72rem; transition: background 0.2s; }
+    #refresh-btn:hover { background: #3b4eca; color: #fff; }
+    #refresh-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* 목록 */
     .cctv-list { overflow-y: auto; flex: 1; }
-    .cctv-item { padding: 11px 14px; border-bottom: 1px solid #1e2133; cursor: pointer; transition: background 0.15s; }
+    .cctv-item { padding: 10px 13px; border-bottom: 1px solid #1e2133; cursor: pointer; transition: background 0.15s; }
     .cctv-item:hover { background: #21263a; }
     .cctv-item.active { background: #1e2f5e; border-left: 3px solid #3b4eca; }
     .cctv-item.hidden { display: none; }
-    .cctv-item .name { font-size: 0.84rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .cctv-item .meta { font-size: 0.71rem; color: #64748b; margin-top: 3px; display: flex; gap: 6px; align-items: center; }
-    .dist-badge { display: inline-block; background: #1e293b; border: 1px solid #334155; border-radius: 4px; padding: 1px 6px; font-size: 0.67rem; color: #94a3b8; }
-    .type-badge { display: inline-block; border-radius: 4px; padding: 1px 6px; font-size: 0.67rem; }
-    .type-ex { background: #1a2e1a; border: 1px solid #166534; color: #4ade80; }
+    .cctv-item .name { font-size: 0.83rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cctv-item .meta { font-size: 0.7rem; color: #64748b; margin-top: 3px; display: flex; gap: 5px; align-items: center; }
+    .dist-badge { display: inline-block; background: #1e293b; border: 1px solid #334155; border-radius: 4px; padding: 1px 5px; font-size: 0.66rem; color: #94a3b8; }
+    .type-badge { display: inline-block; border-radius: 4px; padding: 1px 5px; font-size: 0.66rem; }
+    .type-ex  { background: #1a2e1a; border: 1px solid #166534; color: #4ade80; }
     .type-its { background: #1e2a3a; border: 1px solid #1d4ed8; color: #60a5fa; }
 
     /* ── 메인 ── */
@@ -53,14 +71,13 @@
     .placeholder { text-align: center; color: #374151; }
     .placeholder .icon { font-size: 3.5rem; margin-bottom: 12px; }
 
-    /* 지도 */
     #map-wrap { height: 230px; border-top: 1px solid #2d3148; position: relative; flex-shrink: 0; }
     #map { width: 100%; height: 100%; }
     .map-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #374151; font-size: 0.82rem; background: #0d1020; pointer-events: none; }
 
-    .info-bar { background: #1a1d27; border-top: 1px solid #2d3148; padding: 8px 18px; display: flex; gap: 20px; align-items: center; font-size: 0.76rem; color: #64748b; flex-shrink: 0; }
+    .info-bar { background: #1a1d27; border-top: 1px solid #2d3148; padding: 8px 18px; display: flex; gap: 20px; align-items: center; font-size: 0.75rem; color: #64748b; flex-shrink: 0; }
     .info-bar span { color: #94a3b8; }
-    #stream-url-display { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; font-size: 0.7rem; color: #475569; }
+    #stream-url-display { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; font-size: 0.69rem; color: #475569; }
 
     .overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: rgba(0,0,0,0.75); font-size: 0.9rem; }
     .overlay.hidden { display: none; }
@@ -76,14 +93,14 @@
       header { padding: 9px 13px; }
       header h1 { font-size: 0.92rem; }
       .container { flex-direction: column; height: auto; min-height: calc(100vh - 44px); }
-      .sidebar { width: 100%; min-width: unset; border-right: none; border-top: 1px solid #2d3148; max-height: 42vh; order: 2; }
+      .sidebar { width: 100%; min-width: unset; border-right: none; border-top: 1px solid #2d3148; max-height: 44vh; order: 2; }
       .main { order: 1; flex: none; }
       .player-wrap { height: 44vw; min-height: 160px; }
       #map-wrap { height: 180px; }
-      .info-bar { padding: 5px 11px; gap: 8px; flex-wrap: wrap; }
+      .info-bar { padding: 5px 11px; gap: 8px; }
       #stream-url-display { display: none; }
-      .cctv-item { padding: 13px 14px; }
-      .cctv-item .name { font-size: 0.88rem; white-space: normal; }
+      .cctv-item { padding: 12px 13px; }
+      .cctv-item .name { white-space: normal; }
     }
   </style>
 </head>
@@ -97,16 +114,43 @@
 
 <div class="container">
   <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="sidebar-top">
-        <span id="list-count">불러오는 중…</span>
+    <div class="sidebar-ctrl">
+
+      <!-- 카테고리 탭 -->
+      <div class="cat-tabs">
+        <button class="cat-tab active" onclick="setCategory('home')">🏠 내 동네</button>
+        <button class="cat-tab"        onclick="setCategory('daegu')">🌆 대구 전역</button>
+        <button class="cat-tab"        onclick="setCategory('district')">🗺 구군별</button>
+      </div>
+
+      <!-- 구군 선택 (구군별 탭 선택시) -->
+      <div class="district-grid" id="district-grid">
+        <button class="dist-btn" onclick="setDistrict('dalseo')">달서구</button>
+        <button class="dist-btn" onclick="setDistrict('suseong')">수성구</button>
+        <button class="dist-btn" onclick="setDistrict('dong')">동구</button>
+        <button class="dist-btn" onclick="setDistrict('buk')">북구</button>
+        <button class="dist-btn" onclick="setDistrict('seo')">서구</button>
+        <button class="dist-btn" onclick="setDistrict('nam')">남구</button>
+        <button class="dist-btn" onclick="setDistrict('jung')">중구</button>
+        <button class="dist-btn" onclick="setDistrict('dalseong')">달성군</button>
+        <button class="dist-btn" onclick="setDistrict('gunwi')">군위군</button>
+      </div>
+
+      <!-- 도로 필터 + 카운트 -->
+      <div class="filter-row">
+        <span class="list-count" id="list-count">불러오는 중…</span>
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">전체</button>
+          <button class="filter-btn" data-filter="ex"  onclick="setFilter('ex')">고속도로</button>
+          <button class="filter-btn" data-filter="its" onclick="setFilter('its')">국도</button>
+        </div>
+      </div>
+
+      <!-- 새로고침 -->
+      <div class="refresh-row">
         <button id="refresh-btn" onclick="loadList()" disabled>↺ 새로고침</button>
       </div>
-      <div class="filter-bar">
-        <button class="filter-btn active" data-filter="all"  onclick="setFilter('all')">전체</button>
-        <button class="filter-btn"        data-filter="ex"   onclick="setFilter('ex')">🛣 고속도로</button>
-        <button class="filter-btn"        data-filter="its"  onclick="setFilter('its')">🚗 국도</button>
-      </div>
+
     </div>
     <div class="cctv-list" id="cctv-list"></div>
   </aside>
@@ -119,8 +163,7 @@
         <p>왼쪽 목록에서 CCTV를 선택하세요</p>
       </div>
       <div class="overlay hidden" id="loading-overlay">
-        <div class="spinner"></div>
-        <span>스트림 연결 중…</span>
+        <div class="spinner"></div><span>스트림 연결 중…</span>
       </div>
       <div class="overlay hidden" id="error-overlay">
         <span style="font-size:2rem">⚠️</span>
@@ -146,10 +189,10 @@
   // ── 지도 ─────────────────────────────────────────────────────────────────
   let map = null, allMarkers = [];
 
-  function initMap(lat, lng, name) {
+  function initMap(lat, lng) {
     document.getElementById('map-placeholder').style.display = 'none';
     if (!map) {
-      map = L.map('map', { zoomControl: true }).setView([lat, lng], 14);
+      map = L.map('map').setView([lat, lng], 14);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap', maxZoom: 19,
       }).addTo(map);
@@ -163,56 +206,130 @@
   function updateMapMarkers(list, selectedName) {
     if (!map) return;
     list.forEach(c => {
-      const isSelected = c.name === selectedName;
+      const sel = c.name === selectedName;
       const icon = L.divIcon({
         className: '',
-        html: isSelected
-          ? `<div style="background:#ef4444;border:3px solid #fff;border-radius:50%;width:18px;height:18px;box-shadow:0 2px 8px rgba(0,0,0,0.6)"></div>`
-          : `<div style="background:${c.roadType==='ex'?'#4ade80':'#60a5fa'};border:2px solid #fff;border-radius:50%;width:11px;height:11px;box-shadow:0 1px 4px rgba(0,0,0,0.4)"></div>`,
-        iconSize: isSelected ? [18,18] : [11,11],
-        iconAnchor: isSelected ? [9,9] : [5,5],
+        html: sel
+          ? `<div style="background:#ef4444;border:3px solid #fff;border-radius:50%;width:18px;height:18px;box-shadow:0 2px 8px rgba(0,0,0,.6)"></div>`
+          : `<div style="background:${c.roadType==='ex'?'#4ade80':'#60a5fa'};border:2px solid #fff;border-radius:50%;width:11px;height:11px;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>`,
+        iconSize: sel?[18,18]:[11,11], iconAnchor: sel?[9,9]:[5,5],
       });
-      const m = L.marker([c.lat, c.lng], { icon })
-        .addTo(map)
-        .bindPopup(`<b style="font-size:0.85rem">📹 ${c.name}</b><br><span style="font-size:0.78rem;color:#666">📏 ${c.dist}km | ${c.roadType==='ex'?'고속도로':'국도'}</span>`);
-      if (isSelected) m.openPopup();
+      const m = L.marker([c.lat, c.lng], {icon}).addTo(map)
+        .bindPopup(`<b style="font-size:.85rem">📹 ${c.name}</b><br><span style="font-size:.76rem;color:#666">${c.roadType==='ex'?'고속도로':'국도'} | ${c.dist}km</span>`);
+      if (sel) m.openPopup();
       allMarkers.push(m);
     });
   }
 
   // ── 설정 ─────────────────────────────────────────────────────────────────
-  const API_KEY  = '0bee526622c242fe973c7b292ecb1235';
-  const API_URL  = 'https://openapi.its.go.kr:9443/cctvInfo';
-  const MAX_COUNT = 30;
+  const API_KEY = '0bee526622c242fe973c7b292ecb1235';
+  const API_URL = 'https://openapi.its.go.kr:9443/cctvInfo';
 
-  // 검색 중심점 (지점별 반경 개별 설정)
-  const CENTERS = [
+  // 내 동네 중심점
+  const HOME_CENTERS = [
     { lat: 35.8176, lng: 128.5160, label: '월배쌍용예가', radius_its: 1.5, radius_ex: 3.0 },
     { lat: 35.8134, lng: 128.5113, label: '달서대로67',   radius_its: 1.5, radius_ex: 3.0 },
     { lat: 35.8043, lng: 128.5004, label: '화원역',       radius_its: 1.5, radius_ex: 3.0 },
     { lat: 35.8126, lng: 128.4858, label: '설화명곡역',   radius_its: 1.5, radius_ex: 3.0 },
   ];
 
-  function haversine(lat1, lng1, lat2, lng2) {
-    const R=6371, d2r=Math.PI/180;
-    const dlat=(lat2-lat1)*d2r, dlng=(lng2-lng1)*d2r;
-    const a=Math.sin(dlat/2)**2+Math.cos(lat1*d2r)*Math.cos(lat2*d2r)*Math.sin(dlng/2)**2;
-    return R*2*Math.asin(Math.sqrt(a));
+  // 구군별 바운딩박스 { minX, maxX, minY, maxY }
+  const DISTRICTS = {
+    dalseo:   { name: '달서구', minX:128.46, maxX:128.59, minY:35.78, maxY:35.90 },
+    suseong:  { name: '수성구', minX:128.57, maxX:128.73, minY:35.81, maxY:35.92 },
+    dong:     { name: '동구',   minX:128.59, maxX:128.77, minY:35.84, maxY:36.00 },
+    buk:      { name: '북구',   minX:128.50, maxX:128.66, minY:35.89, maxY:36.03 },
+    seo:      { name: '서구',   minX:128.51, maxX:128.58, minY:35.85, maxY:35.93 },
+    nam:      { name: '남구',   minX:128.55, maxX:128.62, minY:35.82, maxY:35.88 },
+    jung:     { name: '중구',   minX:128.56, maxX:128.62, minY:35.85, maxY:35.89 },
+    dalseong: { name: '달성군', minX:128.30, maxX:128.57, minY:35.62, maxY:35.88 },
+    gunwi:    { name: '군위군', minX:128.52, maxX:128.85, minY:35.96, maxY:36.18 },
+  };
+
+  // 대구 전역 바운딩박스
+  const DAEGU_BBOX = { minX:128.30, maxX:128.85, minY:35.62, maxY:36.18 };
+
+  // ── 상태 ─────────────────────────────────────────────────────────────────
+  let currentCategory = 'home';   // home | daegu | district
+  let currentDistrict = 'dalseo';
+  let currentFilter   = 'all';
+  let cctvData = [];
+
+  // ── 카테고리 전환 ─────────────────────────────────────────────────────────
+  function setCategory(cat) {
+    currentCategory = cat;
+    document.querySelectorAll('.cat-tab').forEach((b,i) => {
+      b.classList.toggle('active', ['home','daegu','district'][i] === cat);
+    });
+    const grid = document.getElementById('district-grid');
+    grid.classList.toggle('show', cat === 'district');
+    loadList();
+  }
+
+  function setDistrict(key) {
+    currentDistrict = key;
+    document.querySelectorAll('.dist-btn').forEach(b => {
+      b.classList.toggle('active', b.getAttribute('onclick').includes(`'${key}'`));
+    });
+    loadList();
+  }
+
+  // ── 도로 필터 ─────────────────────────────────────────────────────────────
+  function setFilter(f) {
+    currentFilter = f;
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.filter === f);
+    });
+    applyFilter(f);
+  }
+
+  function applyFilter(f) {
+    let vis = 0;
+    document.querySelectorAll('.cctv-item').forEach(el => {
+      const show = f === 'all' || el.dataset.type === f;
+      el.classList.toggle('hidden', !show);
+      if (show) vis++;
+    });
+    const label = f === 'all' ? `${cctvData.length}개 카메라` : `${vis}개 (${f==='ex'?'고속도로':'국도'})`;
+    document.getElementById('list-count').textContent = label;
+  }
+
+  // ── CCTV 목록 로드 ────────────────────────────────────────────────────────
+  function haversine(la1, lo1, la2, lo2) {
+    const R=6371, r=Math.PI/180;
+    const dl=(la2-la1)*r, dg=(lo2-lo1)*r;
+    const a=Math.sin(dl/2)**2+Math.cos(la1*r)*Math.cos(la2*r)*Math.sin(dg/2)**2;
+    return Math.round(R*2*Math.asin(Math.sqrt(a))*100)/100;
   }
   function escHtml(s) {
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
+  function toArray(d) { return Array.isArray(d) ? d : (d ? [d] : []); }
 
-  // 가장 가까운 중심점까지의 거리
-  function minDist(lat, lng) {
-    return Math.min(...CENTERS.map(c => haversine(c.lat, c.lng, lat, lng)));
+  // 중심점 기준 거리 (가장 가까운 곳)
+  function refLat() {
+    if (currentCategory === 'home') return HOME_CENTERS[0].lat;
+    if (currentCategory === 'district') { const d = DISTRICTS[currentDistrict]; return (d.minY+d.maxY)/2; }
+    return (DAEGU_BBOX.minY+DAEGU_BBOX.maxY)/2;
+  }
+  function refLng() {
+    if (currentCategory === 'home') return HOME_CENTERS[0].lng;
+    if (currentCategory === 'district') { const d = DISTRICTS[currentDistrict]; return (d.minX+d.maxX)/2; }
+    return (DAEGU_BBOX.minX+DAEGU_BBOX.maxX)/2;
   }
 
-  // ── CCTV 목록 로드 ───────────────────────────────────────────────────────
-  let currentFilter = 'all';
+  async function fetchBbox(bbox, roadType) {
+    const p = new URLSearchParams({
+      apiKey: API_KEY, type: roadType, cctvType: '1', getType: 'json',
+      minX: bbox.minX, maxX: bbox.maxX, minY: bbox.minY, maxY: bbox.maxY,
+    });
+    const res  = await fetch(`${API_URL}?${p}`);
+    const json = await res.json();
+    return toArray(json?.response?.data);
+  }
 
   async function loadList() {
-    const btn = document.getElementById('refresh-btn');
+    const btn     = document.getElementById('refresh-btn');
     const countEl = document.getElementById('list-count');
     const listEl  = document.getElementById('cctv-list');
     const dot     = document.getElementById('status-dot');
@@ -223,56 +340,59 @@
     dot.className = 'status-dot';
 
     const seen = new Set();
-    let allItems = [];
+    let raw = [];
 
     try {
-      for (const center of CENTERS) {
-        for (const roadType of ['its', 'ex']) {
-          const radius = roadType === 'its' ? center.radius_its : center.radius_ex;
-          const margin = radius / 111.0;
-          const params = new URLSearchParams({
-            apiKey: API_KEY, type: roadType, cctvType: '1', getType: 'json',
-            minX: center.lng - margin, maxX: center.lng + margin,
-            minY: center.lat - margin, maxY: center.lat + margin,
-          });
-          const res  = await fetch(`${API_URL}?${params}`);
-          const json = await res.json();
-          // API가 1건일 때 배열 대신 단일 객체로 반환하는 경우 처리
-          const raw = json?.response?.data;
-          const items = Array.isArray(raw) ? raw : (raw ? [raw] : []);
-          for (const c of items) {
-            if (seen.has(c.cctvname)) continue;
-            seen.add(c.cctvname);
-            allItems.push({ ...c, roadType });
+      if (currentCategory === 'home') {
+        // 내 동네: 중심점 반경 검색
+        for (const c of HOME_CENTERS) {
+          for (const [rt, km] of [['its', c.radius_its], ['ex', c.radius_ex]]) {
+            const m = km / 111.0;
+            const bbox = { minX: c.lng-m, maxX: c.lng+m, minY: c.lat-m, maxY: c.lat+m };
+            const items = await fetchBbox(bbox, rt);
+            for (const item of items) {
+              if (seen.has(item.cctvname)) continue;
+              seen.add(item.cctvname);
+              raw.push({ ...item, roadType: rt });
+            }
+          }
+        }
+      } else {
+        // 대구 전역 or 구군별: 바운딩박스 검색
+        const bbox = currentCategory === 'daegu' ? DAEGU_BBOX : DISTRICTS[currentDistrict];
+        for (const rt of ['its', 'ex']) {
+          const items = await fetchBbox(bbox, rt);
+          for (const item of items) {
+            if (seen.has(item.cctvname)) continue;
+            seen.add(item.cctvname);
+            raw.push({ ...item, roadType: rt });
           }
         }
       }
     } catch(e) {
       countEl.textContent = '오류';
-      listEl.innerHTML = `<div style="padding:16px;color:#f87171;font-size:0.8rem">⚠️ API 연결 실패<br><br><span style="color:#64748b">${escHtml(e.message)}</span></div>`;
+      listEl.innerHTML = `<div style="padding:16px;color:#f87171;font-size:0.8rem">⚠️ API 오류<br><br><span style="color:#64748b">${escHtml(e.message)}</span></div>`;
       btn.disabled = false;
       return;
     }
 
-    // 가장 가까운 중심점 기준 거리 계산 + 정렬
-    cctvData = allItems
+    const cx = refLat(), cy = refLng();
+    cctvData = raw
       .map(c => ({
         name:     c.cctvname || '이름 없음',
         lat:      parseFloat(c.coordy),
         lng:      parseFloat(c.coordx),
-        url:      c.cctvurl,
-        fmt:      (c.cctvformat || '').toUpperCase(),
+        url:      c.cctvurl || '',
+        fmt:      (c.cctvformat||'').toUpperCase(),
         roadType: c.roadType,
-        dist:     Math.round(minDist(parseFloat(c.coordy), parseFloat(c.coordx)) * 100) / 100,
+        dist:     haversine(cx, cy, parseFloat(c.coordy), parseFloat(c.coordx)),
       }))
-      .sort((a,b) => a.dist - b.dist)
-      .slice(0, MAX_COUNT);
+      .sort((a,b) => a.dist - b.dist);
 
-    const total = cctvData.length;
-    countEl.textContent = `${total}개 카메라`;
-    dot.className = total > 0 ? 'status-dot live' : 'status-dot';
+    countEl.textContent = `${cctvData.length}개 카메라`;
+    dot.className = cctvData.length > 0 ? 'status-dot live' : 'status-dot';
 
-    if (total === 0) {
+    if (cctvData.length === 0) {
       listEl.innerHTML = '<div style="padding:20px;color:#475569;text-align:center;font-size:0.82rem">반경 내 CCTV 없음</div>';
     } else {
       listEl.innerHTML = cctvData.map((c,i) => `
@@ -293,47 +413,23 @@
     btn.disabled = false;
   }
 
-  // ── 필터 ─────────────────────────────────────────────────────────────────
-  function setFilter(f) {
-    currentFilter = f;
-    document.querySelectorAll('.filter-btn').forEach(b => {
-      b.classList.toggle('active', b.dataset.filter === f);
-    });
-    applyFilter(f);
-  }
-
-  function applyFilter(f) {
-    let visible = 0;
-    document.querySelectorAll('.cctv-item').forEach(el => {
-      const show = f === 'all' || el.dataset.type === f;
-      el.classList.toggle('hidden', !show);
-      if (show) visible++;
-    });
-    const total = cctvData.length;
-    document.getElementById('list-count').textContent =
-      f === 'all' ? `${total}개 카메라` : `${visible}개 카메라 (${f==='ex'?'고속도로':'국도'})`;
-  }
-
-  // ── CCTV 선택 ────────────────────────────────────────────────────────────
+  // ── CCTV 선택 ─────────────────────────────────────────────────────────────
   let hls = null;
-  let cctvData = [];
 
   async function selectCctv(i) {
     document.querySelectorAll('.cctv-item').forEach(el => el.classList.remove('active'));
     const el = document.querySelector(`.cctv-item[data-i="${i}"]`);
     if (!el) return;
     el.classList.add('active');
+
     document.getElementById('info-name').textContent = el.dataset.name;
     document.getElementById('info-dist').textContent = el.dataset.dist + ' km';
 
-    // 지도 업데이트
+    // 지도
     const lat = parseFloat(el.dataset.lat), lng = parseFloat(el.dataset.lng);
-    if (lat && lng) {
-      initMap(lat, lng, el.dataset.name);
-      updateMapMarkers(cctvData, el.dataset.name);
-    }
+    if (lat && lng) { initMap(lat, lng); updateMapMarkers(cctvData, el.dataset.name); }
 
-    // 플레이어 준비
+    // 플레이어
     document.getElementById('placeholder').style.display = 'none';
     document.getElementById('video-player').style.display = 'block';
     document.getElementById('loading-overlay').classList.remove('hidden');
@@ -341,37 +437,23 @@
 
     // 최신 URL 재조회
     try {
-      const name = el.dataset.name;
-      const roadType = el.dataset.type;
-      let freshUrl = el.dataset.url;
-
-      const center = CENTERS[0];
-      const radius = RADIUS[roadType];
-      const margin = radius / 111.0;
-      const params = new URLSearchParams({
-        apiKey: API_KEY, type: roadType, cctvType: '1', getType: 'json',
-        minX: center.lng - margin*2, maxX: center.lng + margin*2,
-        minY: center.lat - margin*2, maxY: center.lat + margin*2,
-      });
-      const res  = await fetch(`${API_URL}?${params}`);
-      const json = await res.json();
-      const raw2 = json?.response?.data;
-      const items = Array.isArray(raw2) ? raw2 : (raw2 ? [raw2] : []);
-      const match = items.find(c => c.cctvname === name);
-      if (match?.cctvurl) freshUrl = match.cctvurl;
-
-      document.getElementById('stream-url-display').textContent = freshUrl;
-      playStream(freshUrl, el.dataset.fmt);
+      const rt = el.dataset.type;
+      const cx = parseFloat(el.dataset.lat), cy = parseFloat(el.dataset.lng);
+      const m  = (rt==='ex' ? 3.0 : 1.5) / 111.0;
+      const bbox = { minX:cy-m, maxX:cy+m, minY:cx-m, maxY:cx+m };
+      const items = await fetchBbox(bbox, rt);
+      const match = items.find(c => c.cctvname === el.dataset.name);
+      const url = (match?.cctvurl || el.dataset.url).replace(/^http:\/\//, 'https://');
+      document.getElementById('stream-url-display').textContent = url;
+      playStream(url, el.dataset.fmt);
     } catch(e) {
-      playStream(el.dataset.url, el.dataset.fmt);
+      playStream(el.dataset.url.replace(/^http:\/\//, 'https://'), el.dataset.fmt);
     }
   }
 
   function playStream(url, fmt) {
-    url = url.replace(/^http:\/\//, 'https://');
     const video = document.getElementById('video-player');
     if (hls) { hls.destroy(); hls = null; }
-
     const isHls = fmt === 'HLS' || url.includes('.m3u8');
     if (isHls && Hls.isSupported()) {
       hls = new Hls({ enableWorker: false });
@@ -381,9 +463,7 @@
         document.getElementById('loading-overlay').classList.add('hidden');
         video.play().catch(()=>{});
       });
-      hls.on(Hls.Events.ERROR, (_, data) => {
-        if (data.fatal) showError(`스트림 오류: ${data.details}`);
-      });
+      hls.on(Hls.Events.ERROR, (_, d) => { if (d.fatal) showError(`스트림 오류: ${d.details}`); });
     } else {
       showError('재생할 수 없는 스트림 형식입니다.');
     }
@@ -396,6 +476,7 @@
   }
   function hideError() { document.getElementById('error-overlay').classList.add('hidden'); }
 
+  // ── 초기 로드 ─────────────────────────────────────────────────────────────
   loadList();
 </script>
 </body>
