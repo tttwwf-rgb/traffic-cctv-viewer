@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>교통 CCTV 뷰어 — 대구 달서구</title>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f1117; color: #e2e8f0; min-height: 100vh; }
+
+    header { background: #1a1d27; border-bottom: 1px solid #2d3148; padding: 14px 24px; display: flex; align-items: center; gap: 12px; }
+    header h1 { font-size: 1.1rem; font-weight: 600; }
+    header .badge { font-size: 0.72rem; background: #3b4eca; padding: 2px 8px; border-radius: 999px; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #6b7280; margin-left: auto; }
+    .status-dot.live { background: #22c55e; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    .container { display: flex; height: calc(100vh - 53px); }
+
+    .sidebar { width: 280px; min-width: 220px; background: #1a1d27; border-right: 1px solid #2d3148; display: flex; flex-direction: column; overflow: hidden; }
+    .sidebar-header { padding: 14px 16px 10px; font-size: 0.78rem; color: #94a3b8; border-bottom: 1px solid #2d3148; display: flex; justify-content: space-between; align-items: center; }
+    #refresh-btn { background: #2d3148; border: none; color: #94a3b8; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; transition: background 0.2s; }
+    #refresh-btn:hover { background: #3b4eca; color: #fff; }
+    #refresh-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .cctv-list { overflow-y: auto; flex: 1; }
+    .cctv-item { padding: 12px 16px; border-bottom: 1px solid #1e2133; cursor: pointer; transition: background 0.15s; }
+    .cctv-item:hover { background: #21263a; }
+    .cctv-item.active { background: #1e2f5e; border-left: 3px solid #3b4eca; }
+    .cctv-item .name { font-size: 0.85rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cctv-item .meta { font-size: 0.72rem; color: #64748b; margin-top: 3px; }
+    .dist-badge { display: inline-block; background: #1e293b; border: 1px solid #334155; border-radius: 4px; padding: 1px 6px; font-size: 0.68rem; color: #94a3b8; }
+
+    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .player-wrap { flex: 1; background: #000; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    #video-player { width: 100%; height: 100%; object-fit: contain; display: none; }
+    .placeholder { text-align: center; color: #374151; }
+    .placeholder .icon { font-size: 3.5rem; margin-bottom: 12px; }
+
+    .info-bar { background: #1a1d27; border-top: 1px solid #2d3148; padding: 10px 20px; display: flex; gap: 24px; align-items: center; font-size: 0.78rem; color: #64748b; }
+    .info-bar span { color: #94a3b8; }
+    #stream-url-display { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; font-size: 0.72rem; color: #475569; }
+
+    .overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: rgba(0,0,0,0.75); font-size: 0.9rem; }
+    .overlay.hidden { display: none; }
+    .spinner { width: 36px; height: 36px; border: 3px solid #334155; border-top-color: #3b4eca; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to{transform:rotate(360deg)} }
+    .err-msg { color: #f87171; font-size: 0.82rem; text-align: center; padding: 0 24px; }
+
+    .cctv-list::-webkit-scrollbar { width: 4px; }
+    .cctv-list::-webkit-scrollbar-track { background: transparent; }
+    .cctv-list::-webkit-scrollbar-thumb { background: #2d3148; border-radius: 4px; }
+
+    @media (max-width: 600px) {
+      header { padding: 10px 14px; }
+      header h1 { font-size: 0.95rem; }
+      .container { flex-direction: column; height: auto; min-height: calc(100vh - 45px); }
+      .sidebar { width: 100%; min-width: unset; border-right: none; border-top: 1px solid #2d3148; max-height: 40vh; order: 2; }
+      .main { order: 1; flex: none; }
+      .player-wrap { height: 56vw; min-height: 180px; }
+      .info-bar { padding: 6px 12px; gap: 10px; flex-wrap: wrap; }
+      #stream-url-display { display: none; }
+      .cctv-item { padding: 14px 16px; }
+      .cctv-item .name { font-size: 0.9rem; white-space: normal; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <span style="font-size:1.3rem">📹</span>
+  <h1>교통 CCTV 뷰어</h1>
+  <span class="badge">대구 달서구</span>
+  <div class="status-dot" id="status-dot"></div>
+</header>
+
+<div class="container">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span id="list-count">불러오는 중…</span>
+      <button id="refresh-btn" onclick="loadList()" disabled>↺ 새로고침</button>
+    </div>
+    <div class="cctv-list" id="cctv-list"></div>
+  </aside>
+
+  <main class="main">
+    <div class="player-wrap">
+      <video id="video-player" controls autoplay muted playsinline></video>
+      <div class="placeholder" id="placeholder">
+        <div class="icon">🎥</div>
+        <p>왼쪽 목록에서 CCTV를 선택하세요</p>
+      </div>
+      <div class="overlay hidden" id="loading-overlay">
+        <div class="spinner"></div>
+        <span>스트림 연결 중…</span>
+      </div>
+      <div class="overlay hidden" id="error-overlay">
+        <span style="font-size:2rem">⚠️</span>
+        <p class="err-msg" id="error-msg"></p>
+        <button onclick="hideError()" style="margin-top:8px;padding:6px 16px;background:#2d3148;border:none;color:#e2e8f0;border-radius:6px;cursor:pointer">닫기</button>
+      </div>
+    </div>
+    <div class="info-bar">
+      <div>📍 <span id="info-name">—</span></div>
+      <div>📏 <span id="info-dist">—</span></div>
+      <div id="stream-url-display">스트림 URL 없음</div>
+    </div>
+  </main>
+</div>
+
+<script>
+  // ── 설정 ─────────────────────────────────────────────────────────────────
+  const API_KEY    = '0bee526622c242fe973c7b292ecb1235';
+  const API_URL    = 'https://openapi.its.go.kr:9443/cctvInfo';
+  const CENTER_LAT = 35.8329;
+  const CENTER_LNG = 128.5372;
+  const RADIUS_KM  = 6.0;
+  const MAX_COUNT  = 12;
+
+  // ── 유틸 ─────────────────────────────────────────────────────────────────
+  function haversine(lat1, lng1, lat2, lng2) {
+    const R = 6371, d2r = Math.PI/180;
+    const dlat = (lat2-lat1)*d2r, dlng = (lng2-lng1)*d2r;
+    const a = Math.sin(dlat/2)**2 + Math.cos(lat1*d2r)*Math.cos(lat2*d2r)*Math.sin(dlng/2)**2;
+    return R * 2 * Math.asin(Math.sqrt(a));
+  }
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── CCTV 목록 로드 ───────────────────────────────────────────────────────
+  async function loadList() {
+    const btn = document.getElementById('refresh-btn');
+    const countEl = document.getElementById('list-count');
+    const listEl = document.getElementById('cctv-list');
+    const dot = document.getElementById('status-dot');
+
+    btn.disabled = true;
+    countEl.textContent = '불러오는 중…';
+    listEl.innerHTML = '<div style="padding:20px;color:#475569;text-align:center;font-size:0.82rem">로딩 중…</div>';
+    dot.className = 'status-dot';
+
+    const margin = RADIUS_KM / 111.0;
+    const params = new URLSearchParams({
+      apiKey: API_KEY, cctvType: '1', getType: 'json',
+      minX: CENTER_LNG - margin, maxX: CENTER_LNG + margin,
+      minY: CENTER_LAT - margin, maxY: CENTER_LAT + margin,
+    });
+
+    let allItems = [];
+    try {
+      for (const type of ['its', 'ex']) {
+        params.set('type', type);
+        const res = await fetch(`${API_URL}?${params}`);
+        const json = await res.json();
+        const items = json?.response?.data || [];
+        allItems = allItems.concat(items);
+      }
+    } catch(e) {
+      countEl.textContent = '오류';
+      listEl.innerHTML = `<div style="padding:16px;color:#f87171;font-size:0.8rem">⚠️ API 연결 실패<br><br><span style="color:#64748b">${escHtml(e.message)}</span></div>`;
+      btn.disabled = false;
+      return;
+    }
+
+    // 거리 계산 + 정렬
+    const list = allItems
+      .filter(c => c.cctvurl)
+      .map(c => ({
+        name: c.cctvname || '이름 없음',
+        lat:  parseFloat(c.coordy),
+        lng:  parseFloat(c.coordx),
+        url:  c.cctvurl,
+        fmt:  (c.cctvformat || '').toUpperCase(),
+        dist: Math.round(haversine(CENTER_LAT, CENTER_LNG, parseFloat(c.coordy), parseFloat(c.coordx)) * 100) / 100,
+      }))
+      .sort((a,b) => a.dist - b.dist)
+      .slice(0, MAX_COUNT);
+
+    countEl.textContent = `${list.length}개 카메라`;
+    dot.className = list.length > 0 ? 'status-dot live' : 'status-dot';
+
+    if (list.length === 0) {
+      listEl.innerHTML = '<div style="padding:20px;color:#475569;text-align:center;font-size:0.82rem">반경 내 CCTV 없음</div>';
+    } else {
+      listEl.innerHTML = list.map((c,i) => `
+        <div class="cctv-item" data-i="${i}" onclick="selectCctv(${i})"
+             data-url="${escHtml(c.url)}" data-name="${escHtml(c.name)}" data-dist="${c.dist}" data-fmt="${c.fmt}">
+          <div class="name" title="${escHtml(c.name)}">${escHtml(c.name)}</div>
+          <div class="meta"><span class="dist-badge">📍 ${c.dist} km</span></div>
+        </div>
+      `).join('');
+    }
+    btn.disabled = false;
+  }
+
+  // ── CCTV 선택 ────────────────────────────────────────────────────────────
+  let hls = null;
+  function selectCctv(i) {
+    document.querySelectorAll('.cctv-item').forEach(el => el.classList.remove('active'));
+    const el = document.querySelector(`.cctv-item[data-i="${i}"]`);
+    if (!el) return;
+    el.classList.add('active');
+    document.getElementById('info-name').textContent = el.dataset.name;
+    document.getElementById('info-dist').textContent = el.dataset.dist + ' km';
+    document.getElementById('stream-url-display').textContent = el.dataset.url;
+    playStream(el.dataset.url, el.dataset.fmt);
+  }
+
+  function playStream(url, fmt) {
+    const video = document.getElementById('video-player');
+    document.getElementById('placeholder').style.display = 'none';
+    video.style.display = 'block';
+    document.getElementById('loading-overlay').classList.remove('hidden');
+    document.getElementById('error-overlay').classList.add('hidden');
+
+    if (hls) { hls.destroy(); hls = null; }
+
+    const isHls = fmt === 'HLS' || url.includes('.m3u8');
+    if (isHls && Hls.isSupported()) {
+      hls = new Hls({ enableWorker: false });
+      hls.loadSource(url);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        document.getElementById('loading-overlay').classList.add('hidden');
+        video.play().catch(()=>{});
+      });
+      hls.on(Hls.Events.ERROR, (_, data) => {
+        if (data.fatal) showError(`스트림 오류: ${data.details}`);
+      });
+    } else {
+      showError('재생할 수 없는 스트림 형식입니다.');
+    }
+  }
+
+  function showError(msg) {
+    document.getElementById('loading-overlay').classList.add('hidden');
+    document.getElementById('error-overlay').classList.remove('hidden');
+    document.getElementById('error-msg').textContent = msg;
+  }
+  function hideError() {
+    document.getElementById('error-overlay').classList.add('hidden');
+  }
+
+  loadList();
+</script>
+</body>
+</html>
