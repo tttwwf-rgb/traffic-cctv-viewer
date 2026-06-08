@@ -212,6 +212,9 @@
   }
 
   function playStream(url, fmt) {
+    // HTTPS 페이지에서 HTTP 스트림 차단 방지 — https로 강제 변환
+    url = url.replace(/^http:\/\//, 'https://');
+
     const video = document.getElementById('video-player');
     document.getElementById('placeholder').style.display = 'none';
     video.style.display = 'block';
