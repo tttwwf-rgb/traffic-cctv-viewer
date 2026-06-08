@@ -4,9 +4,9 @@
 """
 
 # ─── ITS 국가교통정보센터 API ────────────────────────────────────────────────
-# 발급처: https://www.its.go.kr/opendata/opendataList?service=cctv
-# (무료 회원가입 후 API 키 발급, 즉시 사용 가능)
-ITS_API_KEY = "0bee526622c242fe973c7b292ecb1235"
+# 로컬: 아래에 직접 입력 / 클라우드: 환경변수 ITS_API_KEY 설정
+import os
+ITS_API_KEY = os.environ.get("ITS_API_KEY", "0bee526622c242fe973c7b292ecb1235")
 
 ITS_API_URL = "https://openapi.its.go.kr:9443/cctvInfo"
 
