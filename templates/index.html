@@ -328,7 +328,8 @@
     // 기존 HLS 인스턴스 해제
     if (hls) { hls.destroy(); hls = null; }
 
-    const isHls = url.includes('.m3u8');
+    // cctvformat 필드 우선, 없으면 URL에서 추측
+    const isHls = fmt === 'HLS' || url.includes('.m3u8');
 
     if (isHls && Hls.isSupported()) {
       hls = new Hls({ enableWorker: false });
