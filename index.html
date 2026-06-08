@@ -227,7 +227,7 @@
     try {
       for (const center of CENTERS) {
         for (const roadType of ['its', 'ex']) {
-          const radius = RADIUS[roadType];
+          const radius = roadType === 'its' ? center.radius_its : center.radius_ex;
           const margin = radius / 111.0;
           const params = new URLSearchParams({
             apiKey: API_KEY, type: roadType, cctvType: '1', getType: 'json',
