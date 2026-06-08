@@ -100,6 +100,7 @@ def fetch_cctv_list():
                 "lat":         lat,
                 "lng":         lng,
                 "stream_url":  stream_url,
+                "cctvformat":  item.get("cctvformat", "").upper(),   # HLS / RTSP 등
                 "distance_km": round(dist, 2),
             })
         except (ValueError, TypeError) as e:

@@ -272,7 +272,7 @@
       } else {
         listEl.innerHTML = list.map((c, i) => `
           <div class="cctv-item" data-i="${i}" onclick="selectCctv(${i})"
-               data-url="${c.stream_url}" data-name="${escHtml(c.name)}" data-dist="${c.distance_km}">
+               data-url="${c.stream_url}" data-name="${escHtml(c.name)}" data-dist="${c.distance_km}" data-fmt="${c.cctvformat}">
             <div class="name" title="${escHtml(c.name)}">${escHtml(c.name)}</div>
             <div class="meta">
               <span class="dist-badge">📍 ${c.distance_km} km</span>
