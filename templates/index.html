@@ -305,12 +305,13 @@
     const url  = el.dataset.url;
     const name = el.dataset.name;
     const dist = el.dataset.dist;
+    const fmt  = el.dataset.fmt || '';
 
     document.getElementById('info-name').textContent = name;
     document.getElementById('info-dist').textContent = dist + ' km';
     document.getElementById('stream-url-display').textContent = url;
 
-    playStream(url, name);
+    playStream(url, name, fmt);
   }
 
   function playStream(url, name) {
