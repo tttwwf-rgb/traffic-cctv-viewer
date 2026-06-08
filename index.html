@@ -354,7 +354,8 @@
       });
       const res  = await fetch(`${API_URL}?${params}`);
       const json = await res.json();
-      const items = json?.response?.data || [];
+      const raw2 = json?.response?.data;
+      const items = Array.isArray(raw2) ? raw2 : (raw2 ? [raw2] : []);
       const match = items.find(c => c.cctvname === name);
       if (match?.cctvurl) freshUrl = match.cctvurl;
 
