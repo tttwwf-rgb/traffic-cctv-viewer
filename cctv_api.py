@@ -52,40 +52,41 @@ def fetch_cctv_list():
     min_y = CENTER_LAT - margin
     max_y = CENTER_LAT + margin
 
-    params = {
-        "apiKey":   ITS_API_KEY,
-        "type":     "all",          # 고속도로+국도+지방도 전체
-        "minX":     str(min_x),
-        "maxX":     str(max_x),
-        "minY":     str(min_y),
-        "maxY":     str(max_y),
-        "getType":  "json",
-    }
+    # 국도(its) + 고속도로(ex) 두 번 호출해서 합산
+    raw_list = []
+    for road_type in ("its", "ex"):
+        params = {
+            "apiKey":   ITS_API_KEY,
+            "type":     road_type,
+            "cctvType": "1",            # 1=HLS 실시간 스트리밍
+            "minX":     str(min_x),
+            "maxX":     str(max_x),
+            "minY":     str(min_y),
+            "maxY":     str(max_y),
+            "getType":  "json",
+        }
+        try:
+            resp = requests.get(ITS_API_URL, params=params, timeout=10, verify=False)
+            resp.raise_for_status()
+            data = resp.json()
+            items = data.get("response", {}).get("data") or []
+            raw_list.extend(items)
+            logger.info("type=%s -> %d건", road_type, len(items))
+        except requests.RequestException as e:
+            logger.warning("ITS API 호출 실패 (type=%s): %s", road_type, e)
+        except ValueError as e:
+            logger.warning("ITS API 응답 파싱 실패 (type=%s): %s", road_type, e)
 
-    try:
-        resp = requests.get(ITS_API_URL, params=params, timeout=10)
-        resp.raise_for_status()
-        data = resp.json()
-    except requests.RequestException as e:
-        logger.error("ITS API 호출 실패: %s", e)
-        raise RuntimeError(f"API 호출 실패: {e}") from e
-    except ValueError as e:
-        logger.error("ITS API 응답 파싱 실패: %s", e)
-        raise RuntimeError(f"응답 파싱 실패: {e}") from e
-
-    # 응답 구조: {"response": {"data": [...]}}
-    try:
-        raw_list = data["response"]["data"]
-    except (KeyError, TypeError):
-        logger.warning("CCTV 데이터 없음 (반경 내 결과 0건일 수 있음)")
+    if not raw_list:
+        logger.warning("CCTV 데이터 없음 (반경 내 결과 0건)")
         return []
 
     result = []
     for item in raw_list:
         try:
-            lat = float(item.get("coordY", 0))
-            lng = float(item.get("coordX", 0))
-            stream_url = item.get("cctvUrl", "")
+            lat = float(item.get("coordy", 0))
+            lng = float(item.get("coordx", 0))
+            stream_url = item.get("cctvurl", "")
 
             if not stream_url:
                 continue

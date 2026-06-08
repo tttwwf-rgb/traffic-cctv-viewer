@@ -10,6 +10,12 @@ import signal
 import logging
 import logging.handlers
 
+# Windows 한글 인코딩 강제 적용
+if sys.stdout.encoding != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8')
+if sys.stderr.encoding != 'utf-8':
+    sys.stderr.reconfigure(encoding='utf-8')
+
 from flask import Flask, jsonify, render_template
 import config
 from cctv_api import fetch_cctv_list
@@ -17,7 +23,7 @@ from cctv_api import fetch_cctv_list
 # ─── 로그 설정 ───────────────────────────────────────────────────────────────
 def setup_logging():
     fmt = logging.Formatter(
-        "[%(asctime)s] %(levelname)s %(name)s — %(message)s",
+        "[%(asctime)s] %(levelname)s %(name)s - %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S"
     )
     root = logging.getLogger()

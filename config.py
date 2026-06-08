@@ -15,7 +15,7 @@ CENTER_LAT = 35.8329    # 위도
 CENTER_LNG = 128.5372   # 경도
 
 # 검색 반경 (km) — 숫자를 높이면 더 넓은 범위 검색
-SEARCH_RADIUS_KM = 3.0
+SEARCH_RADIUS_KM = 6.0
 
 # ─── CCTV 표시 개수 제한 ────────────────────────────────────────────────────
 MAX_CCTV_COUNT = 12
