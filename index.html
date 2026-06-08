@@ -238,7 +238,7 @@
           const json = await res.json();
           const items = json?.response?.data || [];
           for (const c of items) {
-            if (!c.cctvurl || seen.has(c.cctvname)) continue;
+            if (seen.has(c.cctvname)) continue;
             seen.add(c.cctvname);
             allItems.push({ ...c, roadType });
           }
