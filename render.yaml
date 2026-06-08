@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: traffic-cctv-viewer
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: ITS_API_KEY
+        sync: false
+      - key: PYTHONUTF8
+        value: "1"
