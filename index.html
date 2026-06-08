@@ -182,7 +182,10 @@
     dot.className = list.length > 0 ? 'status-dot live' : 'status-dot';
 
     if (list.length === 0) {
-      listEl.innerHTML = '<div style="padding:20px;color:#475569;text-align:center;font-size:0.82rem">반경 내 CCTV 없음</div>';
+      listEl.innerHTML = `<div style="padding:16px;color:#f87171;font-size:0.78rem">
+        반경 내 CCTV 없음<br><br>
+        <span style="color:#64748b">원본 데이터: ${allItems.length}건 수신</span>
+      </div>`;
     } else {
       listEl.innerHTML = list.map((c,i) => `
         <div class="cctv-item" data-i="${i}" onclick="selectCctv(${i})"
